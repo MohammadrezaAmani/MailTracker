@@ -1,4 +1,4 @@
-# 💌 Python Mail Tracker
+# 💌 FastAPI Mail Tracker
 
 ![Project Logo](./tracker/assets/media/logo.jpg)
 
@@ -34,8 +34,8 @@ To get started with Python Mail Tracker, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/python-mail-tracker.git
-cd python-mail-tracker
+git clone https://github.com/MohammadrezaAmani/MailTracker.git
+cd MailTracker
 ```
 1- Install the required dependencies:
 ```bash
