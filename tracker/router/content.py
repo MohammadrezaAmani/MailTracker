@@ -19,7 +19,7 @@ async def get_links():
     return jsonable_encoder(DATABASE.get_contents())
 
 
-@router.post("/add")
+@router.get("/add")
 async def add_content():
     id = str(uuid4())
     content = ContentDB(
@@ -31,9 +31,7 @@ async def add_content():
         views=[],
     )
     if DATABASE.add_content(content):
-        return JSONResponse(
-            status_code=201, content={"message": "Content added successfully"}
-        )
+        return jsonable_encoder(content)
     return JSONResponse(status_code=400, content={"message": "Content not added"})
 
 
