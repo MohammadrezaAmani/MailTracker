@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.encoders import jsonable_encoder
 from uuid import uuid4
-from tracker.models.content import ContentAdd, ContentDB, ViewDB
+from tracker.models.content import ContentDB, ViewDB
 from tracker._config import DATABASE
 import datetime
+import pathlib
 
+BASE_PATH = pathlib.Path(__file__).parent.parent.parent
 router = APIRouter(
     prefix="/content",
     tags=["Content"],
@@ -17,12 +19,13 @@ async def get_links():
     return jsonable_encoder(DATABASE.get_contents())
 
 
-@router.post("")
-async def add_content(content: ContentAdd):
+@router.post("/add")
+async def add_content():
+    id = str(uuid4())
     content = ContentDB(
-        id=str(uuid4()),
-        assets=content.assets,
-        link=content.link,
+        id=id,
+        assets="/tracker/assets/media/defult.png",
+        link=id,
         created_at=datetime.datetime.now(),
         user=1,
         views=[],
@@ -44,9 +47,11 @@ async def get_content(id, request: Request):
         request=(request.headers.__dict__),
     )
     DATABASE.add_view_to_content(id, view)
-    return jsonable_encoder(view)
+    return FileResponse(
+        str(BASE_PATH) + DATABASE.search_content(id).assets, media_type="image/png"
+    )
 
 
-@router.get("/{id:int}/views")
-async def get_views(id: int):
+@router.get("/{id}/views")
+async def get_views(id):
     return jsonable_encoder(DATABASE.search_content(id).views)
