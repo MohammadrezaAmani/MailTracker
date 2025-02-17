@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from tracker.router import content
 
 app = FastAPI()

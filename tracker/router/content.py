@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse, FileResponse
-from fastapi.encoders import jsonable_encoder
-from uuid import uuid4
-from tracker.models.content import ContentDB, ViewDB
-from tracker._config import DATABASE
 import datetime
 import pathlib
+from uuid import uuid4
+
+from fastapi import APIRouter, Request
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import FileResponse, JSONResponse
+
+from tracker._config import DATABASE
+from tracker.models.content import ContentDB, ViewDB
 
 BASE_PATH = pathlib.Path(__file__).parent.parent.parent
 router = APIRouter(
